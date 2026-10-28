@@ -1,0 +1,1 @@
+npx @modelcontextprotocol/inspector ..\bin\TeeChart_MCP.exe
