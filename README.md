@@ -2,6 +2,8 @@
 
 MCP Server to create charts and plots using the TeeChart library
 
+<img width="1802" height="1482" alt="image" src="https://github.com/user-attachments/assets/c828cac8-e075-44a0-81ae-3c6dc1262ff0" />
+
 ## Testing in Windows with Powershell:
 
 Move first to the bin subfolder where the executable TeeChart_MCP.exe resides.
