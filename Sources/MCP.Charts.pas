@@ -244,8 +244,8 @@ begin
   W := ArgInt(Args, 'width', 800);
   H := ArgInt(Args, 'height', 500);
 
-  if (W < 50) or (W > 4000) or (H < 50) or (H > 4000) then
-    raise EArgumentException.Create('width and height must be between 50 and 4000');
+  if (W < 50) or (W > 8000) or (H < 50) or (H > 8000) then
+    raise EArgumentException.Create('width and height must be between 50 and 8000');
 
   Title := ArgStr(Args, 'title');
 
