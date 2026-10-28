@@ -1,3 +1,7 @@
+{***************************************************}
+{  TeeChart MCP Server                              }
+{  Copyright (c) 2026 by Steema Software            }
+{***************************************************}
 unit MCP.Transport;
 
 { Transport abstraction for the MCP server.

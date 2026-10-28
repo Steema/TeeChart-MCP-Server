@@ -1,3 +1,7 @@
+{***************************************************}
+{  TeeChart MCP Server                              }
+{  Copyright (c) 2026 by Steema Software            }
+{***************************************************}
 unit MCP.Server;
 
 { Minimal MCP server core (JSON-RPC 2.0).

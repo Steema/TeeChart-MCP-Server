@@ -1,6 +1,12 @@
+{***************************************************}
+{  TeeChart MCP Server                              }
+{  Copyright (c) 2026 by Steema Software            }
+{***************************************************}
 program TeeChart_MCP;
 
 {$APPTYPE CONSOLE}
+
+// This project has been partially created using the AI
 
 uses
   System.SysUtils,

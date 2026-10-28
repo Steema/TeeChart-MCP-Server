@@ -1,4 +1,12 @@
+{***************************************************}
+{  TeeChart MCP Server                              }
+{  Copyright (c) 2026 by Steema Software            }
+{***************************************************}
 unit MCP.Charts;
+
+{$IFNDEF MSWINDOWS}
+{$DEFINE FMX}
+{$ENDIF}
 
 { TeeChart tools for the MCP server.
 
