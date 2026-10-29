@@ -81,3 +81,52 @@ Configures visual styling, axes, and formatting properties.
 - **Data Validation:** Always ensure data arrays are formatted as valid JSON before invoking MCP tools.
 - **Missing Parameters:** If required parameters (such as values or labels) are missing from the user's prompt, ask clarifying questions *before* executing the tool call.
 - **Error Handling:** If the MCP server returns a schema or validation error, analyze the message, correct the payload structure, and retry or inform the user clearly.
+
+## Advanced Configuration Architecture
+
+To avoid tool bloat, the MCP server uses a hierarchical property tree model. 
+
+1. **Pre-query:** If you are unsure about a property or its hierarchy, read the resource available on the server:
+   - **Resource URI:** `teechart://docs/property-tree`
+
+2. **Application:** Use the general `update_properties` tool passing a structured JSON object that reflects the TeeChart tree.
+
+## General Configuration Tool
+- `update_properties`: Updates any property of an existing chart hierarchically.
+  - **Parameters:**
+    - `chart_id` (string)
+    - `config` (JSON object)
+
+## Advanced Usage Examples with JSON
+
+### 1. Header, Legend, and Axes Configuration
+**User:** "Change the chart title to 'Sales 2026', put the legend on the right, and set the left axis minimum to 0."
+
+**AI Action:**
+1. (Optional) If needed, read the `teechart://docs/property-tree` resource to confirm the property path.
+2. Call the `update_properties` tool with the following JSON:
+
+```json
+{
+  "chart_id": "chart_01",
+  "config": {
+    "Header": {
+      "Text": "Sales 2026",
+      "Font": {
+        "Size": 14,
+        "Bold": true
+      }
+    },
+    "Legend": {
+      "Visible": true,
+      "Alignment": "Right"
+    },
+    "Axes": {
+      "Left": {
+        "Minimum": 0
+      }
+    }
+  }
+}
+```
+
