@@ -16,13 +16,13 @@ $requests = @(
 $requests | .\teechart_mcp.exe
 ```
 
-Installing the MCP server in the different ides usually consists of adding it as a simple STDIO local path, for example in Claude, ChatGPT Codex, Antigravity etc.
+Installing the MCP server in the different ides usually consists of adding it as a simple STDIO local path, for example in Claude, ChatGPT Codex, Antigravity, Cursor, Kai etc.
 
 Ask the AI itself how to install and use the MCP server.
 
 For example in Antigravity you should add it manually at the configuration file:
 
-C:\Users\Your_Name\.gemini\config\mcp_config.json
+C:\Users\Your_Name\\.gemini\config\mcp_config.json
 
 ```json
 {
