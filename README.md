@@ -4,7 +4,7 @@ MCP Server to create charts and plots using the TeeChart library
 
 <img width="1802" height="1482" alt="image" src="https://github.com/user-attachments/assets/c828cac8-e075-44a0-81ae-3c6dc1262ff0" />
 
-## Testing in Windows with Powershell:
+# Testing in Windows with Powershell:
 
 Move first to the bin subfolder where the executable TeeChart_MCP.exe resides.
 
@@ -45,3 +45,18 @@ Once installed you can simple request to create charts using TeeChart, and getti
 ```
 Use TeeChart to create a line chart with values 3, 7, 4 i 9; set the title “TeeChart Test” and export it as a PNG
 ```
+
+
+# Testing in Ubuntu Linux with OpenCode
+
+<img width="1594" height="1078" alt="image" src="https://github.com/user-attachments/assets/b43f9191-5097-4fb4-81d7-91101cdfb768" />
+
+Using the [opencode.ai](https://opencode.ai/) AI agent, first ask opencode to install the MCP server (the binary under the [bin folder](https://github.com/Steema/TeeChart-MCP-Server/tree/main/bin) here in this repo).
+
+Then ask it to use the TeeChart mcp server to generate a chart with your data.
+
+
+
+
+
+
