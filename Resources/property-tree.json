@@ -1,0 +1,16 @@
+{
+  "uri": "teechart://docs/property-tree",
+  "name": "TeeChart Property Hierarchy Reference",
+  "mimeType": "application/json",
+  "description": "Hierarchical property tree to configure a TeeChart chart",
+  "content": {
+    "Chart": {
+      "Title": { "Text": "string", "Font": { "Color": "hex", "Size": "int" } },
+      "Legend": { "Visible": "bool", "Alignment": "left|right|top|bottom" },
+      "Axes": {
+        "Left": { "Minimum": "float", "Maximum": "float", "Title": { "Text": "string" } },
+        "Bottom": { "Minimum": "float", "Maximum": "float" }
+      }
+    }
+  }
+}
