@@ -32,7 +32,9 @@ uses
   System.Generics.Collections,
 
   {$IFDEF FMX}
-  FMXTee.Engine, FMXTee.Procs, FMXTee.Series, FMXTee.Chart;
+  FMX.Graphics, FMX.Surfaces,
+  FMXTee.Engine, FMXTee.Procs, FMXTee.Series, FMXTee.Chart,
+  FMXTee.Editor.Export, FMXTee.Canvas.PDF, FMXTee.Canvas.SVG;
   {$ELSE}
   VCLTee.TeEngine, VCLTee.TeeProcs, VCLTee.Series, VCLTee.Chart,
   VCLTee.TeeExport, VCLTee.TeePNG, VCLTee.TeeJPEG,
@@ -167,35 +169,82 @@ begin
       'Unknown axis "%s". Valid: left, bottom, right, top', [AName]);
 end;
 
-{ Export. This is the part most likely to need adjusting to your TeeChart
-  version (unit and export-format class names). Keep all of it here. }
-procedure ExportToStream(const Chart: TChart; const Fmt: string;
-                         const Stream: TStream);
 {$IFDEF FMX}
-begin
-  // TODO: FMX export (e.g. via the FMX export formats or a TBitmap)
-  raise ENotSupportedException.Create('Export is not implemented for FMX yet');
-end;
-{$ELSE}
+procedure SaveBitmapToStream(const Bmp: TBitmap; const Stream: TStream; const AExtension:String);
 var
-  Exp: TTeeExportFormat;
+  Surf: TBitmapSurface;
 begin
-  if Fmt = 'png' then Exp := TPNGExportFormat.Create
-  else if (Fmt = 'jpeg') or (Fmt = 'jpg') then Exp := TJPEGExportFormat.Create
-  else if Fmt = 'svg' then Exp := TSVGExportFormat.Create
-  else if Fmt = 'pdf' then Exp := TPDFExportFormat.Create
-  else
-    raise EArgumentException.CreateFmt(
-      'Unsupported format "%s". Valid: png, jpeg, svg, pdf', [Fmt]);
-
+  Surf := TBitmapSurface.Create;
   try
-    Exp.Panel := Chart;
-    Exp.SaveToStream(Stream);
+    Surf.Assign(Bmp);
+    Stream.Position := 0;
+
+    if not TBitmapCodecManager.SaveToStream(Stream, Surf, AExtension) then
+      raise Exception.Create('Error saving bitmap to stream as : '+AExtension);
+
+    Stream.Position := 0;
   finally
-    Exp.Free;
+    Surf.Free;
   end;
 end;
 {$ENDIF}
+
+procedure ExportToStream(const Chart: TChart; const Fmt: string;
+                         const Stream: TStream);
+  {$IFDEF FMX}
+  procedure SaveToStream(const AExtension:String);
+  var tmp : TBitmap;
+  begin
+    tmp:=Chart.TeeCreateBitmap;
+    try
+      SaveBitmapToStream(tmp,Stream,AExtension);
+    finally
+      tmp.Free;
+    end;
+  end;
+  {$ENDIF}
+
+var Exp: TTeeExportFormat;
+begin
+  {$IFDEF FMX}
+  if Fmt = 'png' then
+  begin
+    SaveToStream('.png');
+    Exit;
+  end
+  else
+  if (Fmt = 'jpeg') or (Fmt = 'jpg') then
+  begin
+    SaveToStream('.jpg');
+    Exit;
+  end
+  else
+  begin
+    {$ELSE}
+    if Fmt = 'png' then Exp := TPNGExportFormat.Create
+    else
+    if (Fmt = 'jpeg') or (Fmt = 'jpg') then
+       Exp := TJPEGExportFormat.Create
+    else
+    {$ENDIF}
+    if Fmt = 'svg' then Exp := TSVGExportFormat.Create
+    else
+    if Fmt = 'pdf' then Exp := TPDFExportFormat.Create
+    else
+      raise EArgumentException.CreateFmt(
+        'Unsupported format "%s". Valid: png, jpeg, svg, pdf', [Fmt]);
+
+    try
+      Exp.Panel := Chart;
+      Exp.SaveToStream(Stream);
+    finally
+      Exp.Free;
+    end;
+
+  {$IFDEF FMX}
+  end;
+  {$ENDIF}
+end;
 
 function StreamToBase64(const Stream: TMemoryStream): string;
 var
@@ -252,8 +301,8 @@ begin
   W := ArgInt(Args, 'width', 800);
   H := ArgInt(Args, 'height', 500);
 
-  if (W < 50) or (W > 8000) or (H < 50) or (H > 8000) then
-    raise EArgumentException.Create('width and height must be between 50 and 8000');
+  if (W < 10) or (W > 8000) or (H < 10) or (H > 8000) then
+    raise EArgumentException.Create('width and height must be between 10 and 8000');
 
   Title := ArgStr(Args, 'title');
 
