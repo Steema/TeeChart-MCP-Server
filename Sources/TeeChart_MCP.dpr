@@ -6,6 +6,10 @@ program TeeChart_MCP;
 
 {$APPTYPE CONSOLE}
 
+{$IFDEF MACOS}
+  {$E OSX64}
+{$ENDIF}
+
 // This project has been partially created using the AI
 
 uses
